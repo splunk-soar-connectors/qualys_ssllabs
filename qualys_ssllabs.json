@@ -1,275 +1,278 @@
 {
-	"appid": "faad7a60-9c3c-40da-9322-c9d9a54a7cfb",
-	"name": "SSL Labs",
-	"description": "This app supports executing investigative actions like 'run query' to analyze a host.",
-	"type": "information",
-	"publisher": "Phantom",
-	"main_module": "qualys_ssllabs_connector.pyc",
-    "app_version": "1.0.10",
-    "utctime_updated": "2017-08-10T00:16:57.000000Z",
-	"package_name": "phantom_qualys_ssllabs",
-	"product_vendor": "Qualys",
-	"product_name": "SSL Labs",
-	"product_version_regex": ".*",
-	"min_phantom_version": "3.0.190",
-	"logo": "qualys.png",
-	"license": "Copyright (c) Phantom Cyber Corporation 2016",
+    "appid": "faad7a60-9c3c-40da-9322-c9d9a54a7cfb",
+    "name": "SSL Labs",
+    "description": "This app supports executing investigative actions like 'run query' to analyze a host.",
+    "type": "information",
+    "publisher": "Phantom",
+    "main_module": "qualys_ssllabs_connector.pyc",
+    "app_version": "1.0.13",
+    "utctime_updated": "2018-02-02T23:44:08.000000Z",
+    "package_name": "phantom_qualys_ssllabs",
+    "product_vendor": "Qualys",
+    "product_name": "SSL Labs",
+    "product_version_regex": ".*",
+    "min_phantom_version": "3.0.190",
+    "logo": "logo_qualys.svg",
+    "logo_dark": "logo_qualys_dark.svg",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2016-2018",
     "configuration": {
-      "base_url": {
-        "data_type": "string",
-        "order": 0,
-        "description": "Base URL",
-        "default": "https://api.ssllabs.com/",
-        "required": false
-      },
-      "verify_server_cert": {
-        "data_type": "boolean",
-        "description": "Verify server certificate",
-        "required": true,
-        "order": 1,
-        "default": true
-      }
-    },
-    "actions": [
-      {
-        "action": "test connectivity",
-        "description": "Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials.",
-        "type": "test",
-        "identifier": "test_asset_connectivity",
-        "read_only": true,
-        "parameters": {
-        },
-        "output": [
-        ],
-        "versions":"EQ(*)"
-      },
-      {
-        "action": "run query",
-        "description": "Run SSL Labs analysis of a host",
-        "type": "investigate",
-        "identifier": "run_query",
-        "read_only": true,
-        "parameters": {
-          "host": {
+        "base_url": {
             "data_type": "string",
             "order": 0,
-            "description": "Host address ie. www.qualys.com",
-            "required": true,
-		    "contains": ["domain"]
-          },
-          "publish": {
-            "data_type": "string",
-            "order": 1,
-            "description": "Publish report publicly ([off]/on)",
-            "default": "off",
-            "value_list": ["off", "on"],
+            "description": "Base URL",
+            "default": "https://api.ssllabs.com/",
             "required": false
-          },
-          "start_new": {
-            "data_type": "string",
-            "order": 2,
-            "description": "Start a new assessment ([off]/on)",
-            "default": "off",
-            "value_list": ["off", "on"],
-            "required": false
-          },
-          "max_age": {
-            "data_type": "numeric",
-            "order": 3,
-            "description": "Maximum age in hours of cached report",
-            "required": false
-          },
-          "return_all_data": {
-            "data_type": "string",
-            "order": 4,
-            "default": "off",
-            "value_list": ["off", "on"],
-            "description": "Return full information ([off]/on)",
-            "required": false
-          },
-          "ignore_mismatch": {
-            "data_type": "string",
-            "order": 5,
-            "default": "off",
-            "value_list": ["off", "on"],
-            "description": "Ignore certificate mismatch on host ([off]/on)",
-            "required": false
-          }
         },
-		  "render": {
-		    "width": 12,
-		    "title": "Run Query",
-		    "type": "table",
-		    "height": 5
-		  },
-		  "output": [
-		    {
-		      "data_path": "action_result.data.*.host",
-		      "data_type": "string",
-		      "column_name": "host",
-		      "column_order": 0
-		    },
-		    {
-		      "data_path": "action_result.data.*.port",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.data.*.status",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.data.*.isPublic",
-		      "data_type": "boolean"
-		    },
-		    {
-		      "data_path": "action_result.data.*.protocol",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.data.*.testTime",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.eta",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.grade",
-		      "data_type": "string",
-		      "column_name": "grade",
-		      "column_order": 1
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.duration",
-		      "data_type": "numeric",
-		      "column_name": "duration",
-		      "column_order": 8
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.progress",
-		      "data_type": "numeric",
-		      "column_name": "progress",
-		      "column_order": 9
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.ipAddress",
-		      "data_type": "string",
-		      "column_name": "ipAddress",
-		      "column_order": 4,
-		      "contains": ["ip"]   
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.delegation",
-		      "data_type": "numeric",
-		      "column_name": "delegation",
-		      "column_order": 0
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.serverName",
-		      "data_type": "string",
-		      "column_name": "serverName",
-		      "column_order": 3,
-		      "contains": ["domain"]   
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.hasWarnings",
-		      "data_type": "boolean",
-		      "column_name": "hasWarnings",
-		      "column_order": 5
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.isExceptional",
-		      "data_type": "boolean",
-		      "column_name": "isExceptional",
-		      "column_order": 6
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.statusMessage",
-		      "data_type": "string",
-		      "column_name": "statusMessage",
-		      "column_order": 7
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.endpoints.*.gradeTrustIgnored",
-		      "data_type": "string",
-		      "column_name": "gradeTrustIgnored",
-		      "column_order": 2
-		      
-		    },
-		    {
-		      "data_path": "action_result.data.*.startTime",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.data.*.engineVersion",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.data.*.criteriaVersion",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.status",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.message",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.summary.total_endpoints",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.parameter.host",
-		      "data_type": "string",
-		      "contains": ["domain"]
-		    },
-		    {
-		      "data_path": "action_result.parameter.context.guid",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.parameter.context.artifact_id",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "action_result.parameter.publish",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.parameter.start_new",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.parameter.ignore_mismatch",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.parameter.return_all_data",
-		      "data_type": "string"
-		    },
-		    {
-		      "data_path": "action_result.parameter.max_age",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "summary.total_objects",
-		      "data_type": "numeric"
-		    },
-		    {
-		      "data_path": "summary.total_objects_successful",
-		      "data_type": "numeric"
-		    }
-        ],
-        "versions": "EQ(*)"
-      }
-	]
+        "verify_server_cert": {
+            "data_type": "boolean",
+            "description": "Verify server certificate",
+            "required": true,
+            "order": 1,
+            "default": true
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "description": "Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials.",
+            "type": "test",
+            "identifier": "test_asset_connectivity",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "run query",
+            "description": "Run SSL Labs analysis of a host",
+            "type": "investigate",
+            "identifier": "run_query",
+            "read_only": true,
+            "parameters": {
+                "host": {
+                    "data_type": "string",
+                    "order": 0,
+                    "description": "Host address ie. www.qualys.com",
+                    "required": true,
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                "publish": {
+                    "data_type": "string",
+                    "order": 1,
+                    "description": "Publish report publicly ([off]/on)",
+                    "default": "off",
+                    "value_list": [
+                        "off",
+                        "on"
+                    ],
+                    "required": false
+                },
+                "start_new": {
+                    "data_type": "string",
+                    "order": 2,
+                    "description": "Start a new assessment ([off]/on)",
+                    "default": "off",
+                    "value_list": [
+                        "off",
+                        "on"
+                    ],
+                    "required": false
+                },
+                "max_age": {
+                    "data_type": "numeric",
+                    "order": 3,
+                    "description": "Maximum age in hours of cached report",
+                    "required": false
+                },
+                "return_all_data": {
+                    "data_type": "string",
+                    "order": 4,
+                    "default": "off",
+                    "value_list": [
+                        "off",
+                        "on"
+                    ],
+                    "description": "Return full information ([off]/on)",
+                    "required": false
+                },
+                "ignore_mismatch": {
+                    "data_type": "string",
+                    "order": 5,
+                    "default": "off",
+                    "value_list": [
+                        "off",
+                        "on"
+                    ],
+                    "description": "Ignore certificate mismatch on host ([off]/on)",
+                    "required": false
+                }
+            },
+            "render": {
+                "width": 12,
+                "title": "Run Query",
+                "type": "table",
+                "height": 5
+            },
+            "output": [
+                {
+                    "data_path": "action_result.data.*.host",
+                    "data_type": "string",
+                    "column_name": "host",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.port",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.isPublic",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.protocol",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.testTime",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.eta",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.grade",
+                    "data_type": "string",
+                    "column_name": "grade",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.duration",
+                    "data_type": "numeric",
+                    "column_name": "duration",
+                    "column_order": 8
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.progress",
+                    "data_type": "numeric",
+                    "column_name": "progress",
+                    "column_order": 9
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.ipAddress",
+                    "data_type": "string",
+                    "column_name": "ipAddress",
+                    "column_order": 4,
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.delegation",
+                    "data_type": "numeric",
+                    "column_name": "delegation",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.serverName",
+                    "data_type": "string",
+                    "column_name": "serverName",
+                    "column_order": 3,
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.hasWarnings",
+                    "data_type": "boolean",
+                    "column_name": "hasWarnings",
+                    "column_order": 5
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.isExceptional",
+                    "data_type": "boolean",
+                    "column_name": "isExceptional",
+                    "column_order": 6
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.statusMessage",
+                    "data_type": "string",
+                    "column_name": "statusMessage",
+                    "column_order": 7
+                },
+                {
+                    "data_path": "action_result.data.*.endpoints.*.gradeTrustIgnored",
+                    "data_type": "string",
+                    "column_name": "gradeTrustIgnored",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.startTime",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data.*.engineVersion",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.criteriaVersion",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary.total_endpoints",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.host",
+                    "data_type": "string",
+                    "contains": [
+                        "domain"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.publish",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.start_new",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.ignore_mismatch",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.return_all_data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.max_age",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)"
+        }
+    ]
 }
