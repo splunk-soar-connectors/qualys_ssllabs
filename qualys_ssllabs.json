@@ -244,14 +244,6 @@
      ]
     },
     {
-     "data_path": "action_result.parameter.context.guid",
-     "data_type": "string"
-    },
-    {
-     "data_path": "action_result.parameter.context.artifact_id",
-     "data_type": "numeric"
-    },
-    {
      "data_path": "action_result.parameter.publish",
      "data_type": "string"
     },
