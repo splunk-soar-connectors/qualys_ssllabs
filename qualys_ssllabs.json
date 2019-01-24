@@ -44,7 +44,7 @@
   },
   {
    "action": "run query",
-   "description": "Run SSL Labs analysis of a host",
+   "description": "Execute SSL Labs analysis of a host",
    "type": "investigate",
    "identifier": "run_query",
    "read_only": true,
