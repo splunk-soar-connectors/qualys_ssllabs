@@ -1,7 +1,7 @@
 {
  "appid": "faad7a60-9c3c-40da-9322-c9d9a54a7cfb",
  "name": "SSL Labs",
- "description": "This app supports executing investigative actions like 'run query' to analyze a host.",
+ "description": "This app supports executing investigative actions to analyze a host",
  "type": "information",
  "publisher": "Phantom",
  "main_module": "qualys_ssllabs_connector.pyc",
@@ -11,9 +11,10 @@
  "product_vendor": "Qualys",
  "product_name": "SSL Labs",
  "product_version_regex": ".*",
- "min_phantom_version": "3.0.190",
- "logo": "qualys.png",
- "license": "Copyright (c) Phantom Cyber Corporation 2016",
+ "min_phantom_version": "3.5.210",
+ "logo": "logo_qualys.svg",
+ "logo_dark": "logo_qualys_dark.svg",
+ "license": "Copyright (c) 2016-2019 Splunk Inc.",
  "configuration": {
   "base_url": {
    "data_type": "string",
@@ -33,7 +34,7 @@
  "actions": [
   {
    "action": "test connectivity",
-   "description": "Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials.",
+   "description": "Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials",
    "type": "test",
    "identifier": "test_asset_connectivity",
    "read_only": true,
@@ -241,14 +242,6 @@
      "contains": [
       "domain"
      ]
-    },
-    {
-     "data_path": "action_result.parameter.context.guid",
-     "data_type": "string"
-    },
-    {
-     "data_path": "action_result.parameter.context.artifact_id",
-     "data_type": "numeric"
     },
     {
      "data_path": "action_result.parameter.publish",
