@@ -1,7 +1,7 @@
 {
  "appid": "faad7a60-9c3c-40da-9322-c9d9a54a7cfb",
  "name": "SSL Labs",
- "description": "This app supports executing investigative actions like 'run query' to analyze a host",
+ "description": "This app supports executing investigative actions to analyze a host",
  "type": "information",
  "publisher": "Phantom",
  "main_module": "qualys_ssllabs_connector.pyc",
@@ -44,7 +44,7 @@
   },
   {
    "action": "run query",
-   "description": "Execute SSL Labs analysis of a host",
+   "description": "Run SSL Labs analysis of a host",
    "type": "investigate",
    "identifier": "run_query",
    "read_only": true,
