@@ -13,6 +13,7 @@
     "product_name": "SSL Labs",
     "product_version_regex": ".*",
     "min_phantom_version": "4.9.39220",
+    "fips_compliant": true,
     "logo": "logo_qualys.svg",
     "logo_dark": "logo_qualys_dark.svg",
     "license": "Copyright (c) 2016-2021 Splunk Inc.",
