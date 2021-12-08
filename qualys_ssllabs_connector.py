@@ -189,12 +189,12 @@ class SslLabsConnector(BaseConnector):
 
     def _poll_status(self, endpoint, action_result, params={}):
         polling_attempt = 0
-        #config = self.get_config()
+
         timeout = POLL_TIMEOUT_MINS
         max_polling_attempts = (int(timeout) * 60) / SLEEP_SECS
-        
+
         ret_val, response = phantom.APP_ERROR, None
-        
+
         while polling_attempt < max_polling_attempts:
             polling_attempt += 1
             self.save_progress("Polling attempt {0} of {1}".format(polling_attempt, max_polling_attempts))
