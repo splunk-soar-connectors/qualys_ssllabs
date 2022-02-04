@@ -15,17 +15,17 @@
 #
 #
 # Phantom imports
+import time
+from re import sub
+
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
+import requests
+import simplejson as json
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 # THIS Connector imports
 from qualys_ssllabs_consts import *
-
-import requests
-import time
-import simplejson as json
-from re import sub
 
 
 class SslLabsConnector(BaseConnector):
@@ -192,9 +192,9 @@ class SslLabsConnector(BaseConnector):
         #config = self.get_config()
         timeout = POLL_TIMEOUT_MINS
         max_polling_attempts = (int(timeout) * 60) / SLEEP_SECS
-        
+
         ret_val, response = phantom.APP_ERROR, None
-        
+
         while polling_attempt < max_polling_attempts:
             polling_attempt += 1
             self.save_progress("Polling attempt {0} of {1}".format(polling_attempt, max_polling_attempts))
@@ -352,6 +352,7 @@ if __name__ == '__main__':
 
     # Imports
     import sys
+
     import pudb
 
     # Breakpoint at runtime
