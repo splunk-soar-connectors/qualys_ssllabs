@@ -84,11 +84,13 @@ class SslLabsConnector(BaseConnector):
 
         return error_details
 
-    def _make_rest_call(self, endpoint, action_result, headers={}, params=None, data=None, method="get"):
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
         """ Function that makes the REST call to the device
 
         This is a generic function that can be called from various action handlers.
         """
+        if not headers:
+            headers = {}
 
         # Create the headers
         headers.update(self._headers)
@@ -390,4 +392,4 @@ if __name__ == '__main__':
         # Dump the return value
         print(ret_val)
 
-    exit(0)
+    sys.exit(0)
