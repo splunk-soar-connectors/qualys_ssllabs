@@ -1,23 +1,31 @@
 # File: qualys_ssllabs_connector.py
-# Copyright (c) 2016-2021 Splunk Inc.
 #
-# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
-# without a valid written license from Splunk Inc. is PROHIBITED.
+# Copyright (c) 2016-2022 Splunk Inc.
 #
-# --
-
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+#
+#
 # Phantom imports
+import time
+from re import sub
+
 import phantom.app as phantom
-from phantom.base_connector import BaseConnector
+import requests
+import simplejson as json
 from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
 
 # THIS Connector imports
 from qualys_ssllabs_consts import *
-
-import requests
-import time
-import simplejson as json
-from re import sub
 
 
 class SslLabsConnector(BaseConnector):
@@ -76,8 +84,13 @@ class SslLabsConnector(BaseConnector):
 
         return error_details
 
-    def _make_rest_call(self, endpoint, action_result, headers={}, params=None, data=None, method="get"):
-        """ Function that makes the REST call to the device, generic function that can be called from various action handlers"""
+    def _make_rest_call(self, endpoint, action_result, headers=None, params=None, data=None, method="get"):
+        """ Function that makes the REST call to the device
+
+        This is a generic function that can be called from various action handlers.
+        """
+        if not headers:
+            headers = {}
 
         # Create the headers
         headers.update(self._headers)
@@ -95,15 +108,19 @@ class SslLabsConnector(BaseConnector):
             action_result.set_status(phantom.APP_ERROR, ERR_API_UNSUPPORTED_METHOD, method=method)
         # Make the call
         try:
-            r = request_func(self._base_url + self._api_uri + endpoint,  # The complete url is made up of the base_url, the api url and the endpiont
-                             data=json.dumps(data) if data else None,  # the data, converted to json string format if present, else just set to None
-                             headers=headers,  # The headers to send in the HTTP call
-                             verify=self._verify,  # should cert verification be carried out?
-                             params=params)  # uri parameters if any
+            r = request_func(
+                self._base_url + self._api_uri + endpoint,
+                # The complete url is made up of the base_url, the api url and the endpiont
+                data=json.dumps(data) if data else None,
+                # the data, converted to json string format if present, else just set to None
+                headers=headers,  # The headers to send in the HTTP call
+                verify=self._verify,  # should cert verification be carried out?
+                params=params)  # uri parameters if any
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, ERR_SERVER_CONNECTION, e), resp_json
 
-        # Try a json parse, since most REST API's give back the data in json, if the device does not return JSONs, then need to implement parsing them some other manner
+        # Try a json parse, since most REST API's give back the data in json,
+        # if the device does not return JSONs, then need to implement parsing them some other manner
         try:
             resp_json = r.json()
         except Exception as e:
@@ -111,7 +128,8 @@ class SslLabsConnector(BaseConnector):
             msg_string = ERR_JSON_PARSE.format(raw_text=e)
             return action_result.set_status(phantom.APP_ERROR, msg_string), resp_json
 
-        # Handle any special HTTP error codes here, many devices return an HTTP error code like 204. The requests module treats these as error,
+        # Handle any special HTTP error codes here, many devices return an HTTP error code like 204.
+        # The requests module treats these as error,
         # so handle them here before anything else, uncomment the following lines in such cases
 
         # Handle/process any errors that we get back from the device
@@ -130,7 +148,9 @@ class SslLabsConnector(BaseConnector):
 
         details = json.dumps(resp_json).replace('{', '').replace('}', '')
 
-        return action_result.set_status(phantom.APP_ERROR, ERR_FROM_SERVER.format(status=r.status_code, detail=details)), resp_json
+        return (
+            action_result.set_status(phantom.APP_ERROR, ERR_FROM_SERVER.format(status=r.status_code, detail=details)),
+            resp_json)
 
     def _test_connectivity(self, param):
         """ Function that handles the test connectivity action, it is much simpler than other action handlers."""
@@ -181,12 +201,11 @@ class SslLabsConnector(BaseConnector):
 
     def _poll_status(self, endpoint, action_result, params={}):
         polling_attempt = 0
-        #config = self.get_config()
         timeout = POLL_TIMEOUT_MINS
         max_polling_attempts = (int(timeout) * 60) / SLEEP_SECS
-        
+
         ret_val, response = phantom.APP_ERROR, None
-        
+
         while polling_attempt < max_polling_attempts:
             polling_attempt += 1
             self.save_progress("Polling attempt {0} of {1}".format(polling_attempt, max_polling_attempts))
@@ -248,7 +267,9 @@ class SslLabsConnector(BaseConnector):
         # if a cached report is returned.
         request_params = {}
 
-        if param.get('start_new', 'on') == 'on':  # determine if we start by checking for existing cached results and then running a new query or just with a new query
+        # determine if we start by checking for existing cached results and
+        # then running a new query or just with a new query
+        if param.get('start_new', 'on') == 'on':
             request_params['host'] = param.get('host').strip()
             request_params['publish'] = param.get('publish', 'off')
             request_params['startNew'] = 'on'
@@ -267,7 +288,8 @@ class SslLabsConnector(BaseConnector):
                         request_params['maxAge'] = str(param.get('max_age'))
                 except Exception as ex:
                     self.debug_print("Exception: {}".format(ex))
-                    self.debug_print('Exception on maxAge value, setting to default SSLLABS_MAX_AGE : {}'.format(QUALYS_SSLLABS_MAX_AGE))
+                    self.debug_print('Exception on maxAge value, '
+                                     'setting to default SSLLABS_MAX_AGE : {}'.format(QUALYS_SSLLABS_MAX_AGE))
                     request_params['maxAge'] = str(QUALYS_SSLLABS_MAX_AGE)
             request_params['all'] = param.get('return_all_data', 'off')
 
@@ -279,13 +301,14 @@ class SslLabsConnector(BaseConnector):
             request_params['host'] = request_params['host'][:-1]
         request_params['host'] = sub(r"https{0,1}:\/{0,2}", "", request_params['host'])
 
-        # Make the rest call, note that if we try for cached and its not there, it will automatically go to start a new analysis.
+        # Make the rest call, note that if we try for cached and its not there,
+        # it will automatically go to start a new analysis.
         # unless specified start a new as above.
         ret_val, response = self._make_rest_call(endpoint, action_result, params=request_params)
 
         # Process errors
-        if phantom.is_fail(ret_val) or response is None or response is False or response.get('status') is None or ('errors' in response.keys()) or response.get(
-                'status') == 'ERROR':
+        if phantom.is_fail(ret_val) or response is None or response is False or response.get('status') is None or (
+                'errors' in response.keys()) or response.get('status') == 'ERROR':
             self.debug_print('FAILURE: Found in the app response.\nResponse: {}'.format(response))
             if response is None:
                 action_result.set_summary({"Error": "No response from server"})
@@ -302,8 +325,8 @@ class SslLabsConnector(BaseConnector):
                 del request_params['startNew']
             ret_val, response = self._poll_status(endpoint, action_result, params=request_params)
 
-            if phantom.is_fail(ret_val) or response is None or response is False or response.get('status') is None or ('errors' in response.keys()) or response.get(
-                    'status') == 'ERROR':
+            if phantom.is_fail(ret_val) or response is None or response is False or response.get('status') is None or (
+                    'errors' in response.keys()) or response.get('status') == 'ERROR':
                 self.save_progress("Reached max polling attempts.")
                 action_result.append_to_message("Reached max polling attempts.")
                 return phantom.APP_ERROR
@@ -344,6 +367,7 @@ if __name__ == '__main__':
 
     # Imports
     import sys
+
     import pudb
 
     # Breakpoint at runtime
@@ -368,4 +392,4 @@ if __name__ == '__main__':
         # Dump the return value
         print(ret_val)
 
-    exit(0)
+    sys.exit(0)
