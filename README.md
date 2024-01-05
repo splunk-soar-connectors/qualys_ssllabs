@@ -2,11 +2,11 @@
 # SSL Labs
 
 Publisher: Splunk  
-Connector Version: 2\.0\.4  
+Connector Version: 2.0.5  
 Product Vendor: Qualys  
 Product Name: SSL Labs  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.1.0  
 
 This app supports executing investigative actions to analyze a host
 
@@ -15,15 +15,15 @@ The below configuration variables are required for this Connector to operate.  T
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**base\_url** |  optional  | string | Base URL
-**verify\_server\_cert** |  required  | boolean | Verify server certificate
+**base_url** |  optional  | string | Base URL
+**verify_server_cert** |  required  | boolean | Verify server certificate
 
 ### Supported Actions  
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity\. This action runs a quick query on the device to check the connection and credentials  
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials  
 [run query](#action-run-query) - Run SSL Labs analysis of a host  
 
 ## action: 'test connectivity'
-Validate the asset configuration for connectivity\. This action runs a quick query on the device to check the connection and credentials
+Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials
 
 Type: **test**  
 Read only: **True**
@@ -43,44 +43,44 @@ Read only: **True**
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**host** |  required  | Host address ie\. www\.qualys\.com | string |  `domain` 
-**publish** |  optional  | Publish report publicly \(\[off\]/on\) | string | 
-**start\_new** |  optional  | Start a new assessment \(\[off\]/on\) | string | 
-**max\_age** |  optional  | Maximum age in hours of the cached report\. If the value passed is less than or equal to 0 it will consider default to 12 | numeric | 
-**return\_all\_data** |  optional  | Return full information \(\[off\]/on\) | string | 
-**ignore\_mismatch** |  optional  | Proceed with assessments even when the server certificate doesn't match the assessment hostname\. Set to off by default\. Please note that this parameter is ignored if a cached report is returned | string | 
+**host** |  required  | Host address ie. www.qualys.com | string |  `domain` 
+**publish** |  optional  | Publish report publicly ([off]/on) | string | 
+**start_new** |  optional  | Start a new assessment ([off]/on) | string | 
+**max_age** |  optional  | Maximum age in hours of the cached report. If the value passed is less than or equal to 0 it will consider default to 12 | numeric | 
+**return_all_data** |  optional  | Return full information ([off]/on) | string | 
+**ignore_mismatch** |  optional  | Proceed with assessments even when the server certificate doesn't match the assessment hostname. Set to off by default. Please note that this parameter is ignored if a cached report is returned | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.host | string |  `domain` 
-action\_result\.parameter\.ignore\_mismatch | string | 
-action\_result\.parameter\.max\_age | numeric | 
-action\_result\.parameter\.publish | string | 
-action\_result\.parameter\.return\_all\_data | string | 
-action\_result\.parameter\.start\_new | string | 
-action\_result\.data\.\*\.criteriaVersion | string | 
-action\_result\.data\.\*\.endpoints\.\*\.delegation | numeric | 
-action\_result\.data\.\*\.endpoints\.\*\.duration | numeric | 
-action\_result\.data\.\*\.endpoints\.\*\.eta | numeric | 
-action\_result\.data\.\*\.endpoints\.\*\.grade | string | 
-action\_result\.data\.\*\.endpoints\.\*\.gradeTrustIgnored | string | 
-action\_result\.data\.\*\.endpoints\.\*\.hasWarnings | boolean | 
-action\_result\.data\.\*\.endpoints\.\*\.ipAddress | string |  `ip` 
-action\_result\.data\.\*\.endpoints\.\*\.isExceptional | boolean | 
-action\_result\.data\.\*\.endpoints\.\*\.progress | numeric | 
-action\_result\.data\.\*\.endpoints\.\*\.serverName | string |  `domain` 
-action\_result\.data\.\*\.endpoints\.\*\.statusMessage | string | 
-action\_result\.data\.\*\.engineVersion | string | 
-action\_result\.data\.\*\.host | string | 
-action\_result\.data\.\*\.isPublic | boolean | 
-action\_result\.data\.\*\.port | numeric | 
-action\_result\.data\.\*\.protocol | string | 
-action\_result\.data\.\*\.startTime | numeric | 
-action\_result\.data\.\*\.status | string | 
-action\_result\.data\.\*\.testTime | numeric | 
-action\_result\.summary\.total\_endpoints | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.host | string |  `domain`  |   www.phantom.us 
+action_result.parameter.ignore_mismatch | string |  |   false 
+action_result.parameter.max_age | numeric |  |   0 
+action_result.parameter.publish | string |  |   false 
+action_result.parameter.return_all_data | string |  |   false 
+action_result.parameter.start_new | string |  |   false 
+action_result.data.\*.criteriaVersion | string |  |  
+action_result.data.\*.endpoints.\*.delegation | numeric |  |  
+action_result.data.\*.endpoints.\*.duration | numeric |  |  
+action_result.data.\*.endpoints.\*.eta | numeric |  |  
+action_result.data.\*.endpoints.\*.grade | string |  |  
+action_result.data.\*.endpoints.\*.gradeTrustIgnored | string |  |  
+action_result.data.\*.endpoints.\*.hasWarnings | boolean |  |  
+action_result.data.\*.endpoints.\*.ipAddress | string |  `ip`  |  
+action_result.data.\*.endpoints.\*.isExceptional | boolean |  |  
+action_result.data.\*.endpoints.\*.progress | numeric |  |  
+action_result.data.\*.endpoints.\*.serverName | string |  `domain`  |  
+action_result.data.\*.endpoints.\*.statusMessage | string |  |  
+action_result.data.\*.engineVersion | string |  |  
+action_result.data.\*.host | string |  |  
+action_result.data.\*.isPublic | boolean |  |   false 
+action_result.data.\*.port | numeric |  |   80 
+action_result.data.\*.protocol | string |  |  
+action_result.data.\*.startTime | numeric |  |  
+action_result.data.\*.status | string |  |   success  failed 
+action_result.data.\*.testTime | numeric |  |  
+action_result.summary.total_endpoints | numeric |  |   1 
+action_result.message | string |  |   successfully passed 
+summary.total_objects | numeric |  |   0 
+summary.total_objects_successful | numeric |  |   0 
