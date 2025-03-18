@@ -16,7 +16,7 @@
     "fips_compliant": true,
     "logo": "logo_qualys.svg",
     "logo_dark": "logo_qualys_dark.svg",
-    "license": "Copyright (c) 2016-2024 Splunk Inc.",
+    "license": "Copyright (c) 2016-2025 Splunk Inc.",
     "latest_tested_versions": [
         "Cloud /api/v2/, June 03.2021"
     ],
