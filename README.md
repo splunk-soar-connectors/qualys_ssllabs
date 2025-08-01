@@ -1,7 +1,7 @@
 # SSL Labs
 
 Publisher: Splunk \
-Connector Version: 2.0.7 \
+Connector Version: 2.0.8 \
 Product Vendor: Qualys \
 Product Name: SSL Labs \
 Minimum Product Version: 5.1.0
