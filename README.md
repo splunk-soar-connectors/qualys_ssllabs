@@ -1,9 +1,9 @@
 # SSL Labs
 
-Publisher: Splunk \
-Connector Version: 2.0.8 \
-Product Vendor: Qualys \
-Product Name: SSL Labs \
+Publisher: Splunk <br>
+Connector Version: 2.0.8 <br>
+Product Vendor: Qualys <br>
+Product Name: SSL Labs <br>
 Minimum Product Version: 5.1.0
 
 This app supports executing investigative actions to analyze a host
@@ -19,14 +19,14 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials <br>
 [run query](#action-run-query) - Run SSL Labs analysis of a host
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity. This action runs a quick query on the device to check the connection and credentials
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -41,7 +41,7 @@ No Output
 
 Run SSL Labs analysis of a host
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -95,7 +95,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
