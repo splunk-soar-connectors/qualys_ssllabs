@@ -1,3 +1,3 @@
 **Unreleased**
 
-* Chore: update connector development hooks.
+* Return an action error when an SSL Labs assessment remains incomplete after the polling limit.

@@ -224,11 +224,17 @@ class SslLabsConnector(BaseConnector):
                 return ret_val, response
 
         self.save_progress("Reached max polling attempts.")
-        action_result.append_to_message("Reached max polling attempts.")
         self.debug_print(action_result.get_message())
         action_result.set_summary(response)
         self.set_status(phantom.APP_ERROR)
-        return ret_val, response
+        last_status = response.get("status") if isinstance(response, dict) else None
+        return (
+            action_result.set_status(
+                phantom.APP_ERROR,
+                f"{MSG_MAX_POLLS_REACHED} Assessment did not complete (last status: {last_status}).",
+            ),
+            response,
+        )
 
     def _run_query(self, param):
         """Action handler for the 'run query' action"""
