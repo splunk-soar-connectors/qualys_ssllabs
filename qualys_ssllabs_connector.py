@@ -274,7 +274,7 @@ class SslLabsConnector(BaseConnector):
 
         # determine if we start by checking for existing cached results and
         # then running a new query or just with a new query
-        if param.get("start_new", "on") == "on":
+        if param.get("start_new", "off") == "on":
             request_params["host"] = param.get("host").strip()
             request_params["publish"] = param.get("publish", "off")
             request_params["startNew"] = "on"
